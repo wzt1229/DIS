@@ -1,3 +1,33 @@
+使用DIS提供的isnet-general-use.pth 模型，在iOS移动端实现AI抠图，有两种方案可以尝试：
+一、iOS移动端，基于OpenCV的<opencv2/dnn.hpp>去实现AI抠图
+二、iOS移动端，基于ONNX Runtime去实现AI抠图
+
+下面详细讲解：
+一、iOS移动端，基于OpenCV的<opencv2/dnn.hpp>去实现AI抠图
+1.下载isnet-general-use.pth 模型
+PS: 可以使用icutout.py验证isnet-general-use.pth模型的抠图效果
+2.使用isnet_to_onnx.py脚本转换为isnet-general-use.onnx模型
+PS: 可以使用icutout_onnx.py验证isnet-general-use.onnx模型的抠图效果
+3.在iOS项目中通过pods添加OpenCV，pod 'OpenCV', '4.3.0'
+4.基于OpenCV加载onnx模型，实现抠图功能
+
+二、iOS移动端，基于ONNX Runtime去实现AI抠图
+这个方案还没尝试，成功后我再更新~
+添加 ONNX Runtime iOS 库：
+
+ruby
+pod 'onnxruntime-mobile'
+改用 ORT 推理：
+
+objectivec
+#import <onnxruntime/onnxruntime_cxx_api.h>
+
+Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "ISNet");
+Ort::Session session(env, modelPath.UTF8String, Ort::SessionOptions{});
+
+
+
+
 <p align="center">
   <img width="420" height="320" src="figures/dis-logo-official.png">
 </p>
